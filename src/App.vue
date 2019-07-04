@@ -1,8 +1,7 @@
 <template>
   <div id="app">
-		<!--<p>AAA</p>-->
 		<Header/>
-    <router-view/>
+    <router-view></router-view>
     <notifications group="main"/>
   </div>
 </template>

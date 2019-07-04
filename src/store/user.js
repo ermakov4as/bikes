@@ -20,6 +20,7 @@ const getters = {
 const actions = {
     auth({ commit, dispatch }, data) {
         server.user.login(data, (res) => {
+            console.log(res)
             if (res.success) {
                 commit('setToken', res.key)
                 server.user.info((res) => {
@@ -65,7 +66,7 @@ const actions = {
     logout({ commit }) {
         server.user.logout((res) => {
             commit('deleteUser')
-            router.push({ name: 'login' })
+            $router.push({ name: 'login' })
         })
     },
 
@@ -124,6 +125,7 @@ export const user = {
 }
 
 function _authRouterPush(status) {
+    console.log(status)
     if (status === 'owner') router.push({ name: 'offersGarage' })
     else router.push({ name: 'main' })
 }

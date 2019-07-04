@@ -22,12 +22,12 @@ export default {
                     }
                     callback(clbData)
 								})*/
-            if (data.email === 'email' && data.password === 'password') {
-                let data = {
+            if (data.email === 'email@email.com' && data.password === 'password') {
+                let clbData = {
                     success: true,
                     key: 'test_token'
                 }
-                callback(data)
+                callback(clbData)
             } else {
                 let clbData = {
                     success: false,
@@ -38,17 +38,18 @@ export default {
         },
 
         logout(callback) {
-            HTTP.post(api.user.logout)
+            /*HTTP.post(api.user.logout)
                 .then(res => {
                     callback(res)
                 })
                 .catch(error => {
                     console.log(error)
-                })
+								})*/
+            callback('logout-ok')
         },
 
         info(callback) {
-            HTTP.get(api.user.info)
+            /*HTTP.get(api.user.info)
                 .then((response) => {
                     let clbData = {
                         success: true,
@@ -66,7 +67,16 @@ export default {
                         error
                     }
                     callback(clbData)
-                })
+								})*/
+            let clbData = {
+                success: true,
+                info: {
+                    email: 'email@email.com',
+                    name: 'Test user - client',
+                    status: 'client'
+                }
+            }
+            callback(clbData)
         }
     }
 }

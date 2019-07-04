@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
+import _ from 'lodash'
 
 import Main from '@/views/public/Main.vue'
 
@@ -66,40 +67,40 @@ const PRIVATE_PAGES = [{
         name: 'offerOwner',
         component: () =>
             import ('@/views/private/OfferEdit.vue')
-    },
+    }
 ]
 
 const router = new Router({
-    mode: 'history',
-    base: process.env.BASE_URL,
-    routes: _.concat(UNAUTORIZED_PAGES, PUBLIC_PAGES, PRIVATE_PAGES),
-    scrollBehavior(to, from, savedPosition) {
-        return { x: 0, y: 0 }
-    }
-})
-router.beforeEach((to, from, next) => {
-    // redirect to login page if not logged in and trying to access a restricted page
-    let privatePagesPaths = []
-    let unauthorizedPagesPaths = []
-    PRIVATE_PAGES.forEach((page, i, PRIVATE_PAGES) => {
-        privatePagesPaths.push(page.path)
+        mode: 'history',
+        base: process.env.BASE_URL,
+        routes: _.concat(UNAUTORIZED_PAGES, PUBLIC_PAGES, PRIVATE_PAGES),
+        scrollBehavior(to, from, savedPosition) {
+            return { x: 0, y: 0 }
+        }
     })
-    UNAUTORIZED_PAGES.forEach((page, i, UNAUTORIZED_PAGES) => {
-        unauthorizedPagesPaths.push(page.path)
-    })
+    /*router.beforeEach((to, from, next) => { // TODO: это нужно, но почему-то не работает
+        // redirect to login page if not logged in and trying to access a restricted page
+        let privatePagesPaths = []
+        let unauthorizedPagesPaths = []
+        PRIVATE_PAGES.forEach((page, i, PRIVATE_PAGES) => {
+            privatePagesPaths.push(page.path)
+        })
+        UNAUTORIZED_PAGES.forEach((page, i, UNAUTORIZED_PAGES) => {
+            unauthorizedPagesPaths.push(page.path)
+        })
 
-    const authRequired = !!privatePagesPaths.includes(to.path)
-    const unauthorized = !!unauthorizedPagesPaths.includes(to.path)
-    const loggedIn = store.getters['user/isAutorized']
+        const authRequired = !!privatePagesPaths.includes(to.path)
+        const unauthorized = !!unauthorizedPagesPaths.includes(to.path)
+        const loggedIn = store.getters['user/isAutorized']
 
-    if (authRequired && !loggedIn) {
-        return next('/login')
-    }
-    if (unauthorized && loggedIn) {
-        return next('/')
-    }
+        if (authRequired && !loggedIn) {
+            return next('/login')
+        }
+        if (unauthorized && loggedIn) {
+            return next('/')
+        }
 
-    next()
-})
+        next()
+    })*/
 
 export default router
